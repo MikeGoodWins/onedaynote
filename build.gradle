@@ -1,0 +1,77 @@
+buildscript {
+    ext {
+        dockerPluginVersion = '1.2'
+        flywayPluginVersion = '5.1.4'
+        springBootVersion = '2.1.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("se.transmode.gradle:gradle-docker:${dockerPluginVersion}")
+        classpath("org.flywaydb:flyway-gradle-plugin:${flywayPluginVersion}")
+    }
+}
+plugins {
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'docker'
+
+group = 'online.onedaynote'
+version = '1.0'
+archivesBaseName = 'notes'
+sourceCompatibility = '11'
+
+task buildDocker(type: Docker, dependsOn: build) {
+    tag = 'mikegoodwin/notes'
+    dockerfile = file('Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into "${stageDir}"
+        }
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springCloudVersion = 'Finchley.SR1'
+    modelmapperVersion = '2.0.0'
+    flywayVersion = '5.1.4'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation "org.springframework.boot:spring-boot-starter-mail"
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation group: "com.sun.jersey", name: "jersey-bundle", version: "1.11"
+    implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
+
+    implementation group: 'org.springframework.data', name: 'spring-data-redis', version: '2.4.3'
+    implementation group: 'redis.clients', name: 'jedis', version: '3.5.1'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+    useJUnitPlatform()
+}

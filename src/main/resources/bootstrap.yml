@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: api
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+    username: ${REDIS_USERNAME:redis}
+    password: ${REDIS_PASSWORD:password}
+    default-ttl: 86400
+    hashKey: ${REDIS_HASHKEY:note}
