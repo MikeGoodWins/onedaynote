@@ -18,19 +18,19 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Value("${spring.redis.port}")
     private int redisPort;
 
-    @Value("${spring.redis.username}")
-    private String username;
-
-    @Value("${spring.redis.password}")
-    private String password;
+//    @Value("${spring.redis.username}")
+//    private String username;
+//
+//    @Value("${spring.redis.password}")
+//    private String password;
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {
 
         RedisStandaloneConfiguration config =
                 new RedisStandaloneConfiguration(redisServer, redisPort);
-        config.setUsername(username);
-        config.setPassword(password);
+//        config.setUsername(username);
+//        config.setPassword(password);
         return new JedisConnectionFactory(config);
     }
 

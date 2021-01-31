@@ -1,8 +1,9 @@
 package online.onedaynote.api.services.implementations;
 
-import java.util.Objects;
+import java.util.Optional;
 import online.onedaynote.api.dao.entity.Note;
-import online.onedaynote.api.dao.repositories.interfaces.NoteRepository;
+import online.onedaynote.api.dao.repositories.interfaces.NoteRedisRepository;
+import online.onedaynote.api.dao.repositories.repo.NoteRepositoryImpl;
 import online.onedaynote.api.dto.note.NoteCreate;
 import online.onedaynote.api.dto.note.NoteDto;
 import online.onedaynote.api.exceptions.NotFoundException;
@@ -14,12 +15,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class NoteServiceImpl implements NoteService {
 
-    private final NoteRepository noteRepository;
+    //private final NoteRedisRepository noteRedisRepository;
+    private final NoteRepositoryImpl noteRepository;
     private final NotificationService notificationService;
 
     public NoteServiceImpl(
-            NoteRepository noteRepository,
+            NoteRedisRepository noteRedisRepository,
+            NoteRepositoryImpl noteRepository,
             NotificationService notificationService) {
+        //this.noteRedisRepository = noteRedisRepository;
         this.noteRepository = noteRepository;
         this.notificationService = notificationService;
     }
@@ -27,23 +31,25 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteDto get(String key){
 
-        Note note = noteRepository.findByKey(key);
-        if(Objects.isNull(note)) throw new NotFoundException("Note not found");
-        noteHandleRemove(note);
-        noteHandleNotify(note);
-        return note.toDto();
+        Optional<Note> note = noteRepository.findByKey(key);
+        if(note.isEmpty()) throw new NotFoundException("Note not found");
+        noteHandleNotify(note.get());
+        noteHandleRemove(note.get());
+        return note.get().toDto();
     }
 
     @Override
     public NoteDto add(NoteCreate model) {
         Note note = new Note(model, model.getKey().concat(ParamUtils.paramString(model)));
         noteRepository.save(note);
+        //noteRedisRepository.save(note);
         return note.toDto();
     }
 
     private void noteHandleRemove(Note note){
         if(note.removable){
-            noteRepository.delete(note.key);
+            noteRepository.delete(note);
+            //noteRedisRepository.delete(note.key);
         }
     }
 

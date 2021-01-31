@@ -1,5 +1,24 @@
 version: "3"
 services:
+
+  #Postgres-----------------------------------------------#
+
+  postgres:
+    image: postgres:10.1
+    container_name: postgres
+    volumes:
+      - /home/goodwin/onedaynotedb/data/db/postgres:/var/lib/postgresql/data
+      - ../tools/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - 5432:5432
+    networks:
+      - notes
+
+  #Redis-----------------------------------------------#
+
   redis:
     container_name: redis
     hostname: redis
@@ -8,6 +27,9 @@ services:
       - "6379:6379"
     networks:
       - notes
+
+  #Redis-commander-----------------------------------------------#
+
   redis-commander:
     container_name: redis-commander
     hostname: redis-commander
@@ -17,6 +39,19 @@ services:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - "8081:8081"
+    networks:
+      - notes
+
+  #Notes-----------------------------------------------#
+
+  note:
+    container_name: note
+    image: mikegoodwin/notes:1.0
+    ports:
+      - 4444:4444
+    depends_on:
+      - postgres
+      - redis
     networks:
       - notes
 networks:

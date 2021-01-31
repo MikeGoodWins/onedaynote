@@ -2,20 +2,19 @@ server:
   port: 4444
 spring:
   application:
-    name: api
+    name: notes
   main:
     web-application-type: none
   datasource:
-    url: jdbc:h2:file:/var/tmp/h2
-    username: username
-    password: password
-    driverClassName: org.h2.Driver
-    platform: org.hibernate.dialect.H2Dialect
+    url: jdbc:postgresql://postgres:5432/notes
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
   redis:
     host: ${REDIS_HOST:redis}
     port: ${REDIS_PORT:6379}
-    username: ${REDIS_USERNAME:redis}
-    password: ${REDIS_PASSWORD:password}
+#    username: ${REDIS_USERNAME:redis}
+#    password: ${REDIS_PASSWORD:password}
     hashKey: 'NOTES'
   mail:
     host: smtp.yandex.ru

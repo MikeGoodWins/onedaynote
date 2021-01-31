@@ -2,7 +2,7 @@ package online.onedaynote.api.dao.repositories.interfaces;
 
 import online.onedaynote.api.dao.entity.Note;
 
-public interface NoteRepository {
+public interface NoteRedisRepository {
 
     void save(Note note);
 
