@@ -16,7 +16,7 @@ ENV PATH="$PATH:$JAVA_HOME/bin"
 
 COPY --from=jlink-package /opt/jdk-11-mini-runtime /opt/jdk-11-mini-runtime
 
-EXPOSE 4444
+EXPOSE 8080
 
 COPY ./notes-1.0.jar /app.jar
 CMD ["java", "-Xmx200m", "-jar", "/app.jar"]

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
-    @Value("${spring.email.address}")
+    @Value("${spring.mail.username}")
     private String from;
 
     private static final String MAIL_SUBJECT = "OneDayNote delivery report";

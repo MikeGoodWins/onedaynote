@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Api {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(Api.class, args);
         Logger logger = Logger.getLogger(Application.class.getName());
         logger.info("                         ///////////////////////// O N E D A Y N O T E   R U N !!! " +
                 "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ (GoodWin)");

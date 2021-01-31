@@ -1,0 +1,33 @@
+server:
+  port: 4444
+spring:
+  application:
+    name: api
+  main:
+    web-application-type: none
+  datasource:
+    url: jdbc:h2:file:/var/tmp/h2
+    username: username
+    password: password
+    driverClassName: org.h2.Driver
+    platform: org.hibernate.dialect.H2Dialect
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+    username: ${REDIS_USERNAME:redis}
+    password: ${REDIS_PASSWORD:password}
+    hashKey: 'NOTES'
+  mail:
+    host: smtp.yandex.ru
+    port: 587
+    username: ${MAIL_USERNAME:notify@onedaynote.online}
+    password: ${MAIL_PASSWORD:generatedpass}
+    properties.mail.smtp:
+      ssl.enable: true
+      timeout: 5
+      starttls.enable: true
+logging:
+  file:
+    path: /var/tmp/logs.log
+  level:
+    web: 'DEBUG'
