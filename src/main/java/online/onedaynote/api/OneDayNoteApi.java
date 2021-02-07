@@ -6,13 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Api {
+public class OneDayNoteApi {
 
     public static void main(String[] args) {
-        SpringApplication.run(Api.class, args);
+        SpringApplication.run(OneDayNoteApi.class, args);
         Logger logger = Logger.getLogger(Application.class.getName());
         logger.info("                         ///////////////////////// O N E D A Y N O T E   R U N !!! " +
                 "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ (GoodWin)");
     }
-
 }

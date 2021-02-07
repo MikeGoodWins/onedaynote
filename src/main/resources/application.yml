@@ -3,19 +3,19 @@ server:
 spring:
   application:
     name: notes
-  main:
-    web-application-type: none
+#  main:
+#    web-application-type: none
   datasource:
     url: jdbc:postgresql://postgres:5432/notes
     username: root
     password: root
     driver-class-name: org.postgresql.Driver
-  redis:
-    host: ${REDIS_HOST:redis}
-    port: ${REDIS_PORT:6379}
+#  redis:
+#    host: ${REDIS_HOST:redis}
+#    port: ${REDIS_PORT:6379}
 #    username: ${REDIS_USERNAME:redis}
 #    password: ${REDIS_PASSWORD:password}
-    hashKey: 'NOTES'
+#    hashKey: 'NOTES'
   mail:
     host: smtp.yandex.ru
     port: 587
@@ -25,8 +25,3 @@ spring:
       ssl.enable: true
       timeout: 5
       starttls.enable: true
-logging:
-  file:
-    path: /var/tmp/logs.log
-  level:
-    web: 'DEBUG'

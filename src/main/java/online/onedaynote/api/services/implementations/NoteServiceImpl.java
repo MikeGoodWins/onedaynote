@@ -2,7 +2,6 @@ package online.onedaynote.api.services.implementations;
 
 import java.util.Optional;
 import online.onedaynote.api.dao.entity.Note;
-import online.onedaynote.api.dao.repositories.interfaces.NoteRedisRepository;
 import online.onedaynote.api.dao.repositories.repo.NoteRepositoryImpl;
 import online.onedaynote.api.dto.note.NoteCreate;
 import online.onedaynote.api.dto.note.NoteDto;
@@ -16,11 +15,12 @@ import org.springframework.stereotype.Service;
 public class NoteServiceImpl implements NoteService {
 
     //private final NoteRedisRepository noteRedisRepository;
+
     private final NoteRepositoryImpl noteRepository;
     private final NotificationService notificationService;
 
     public NoteServiceImpl(
-            NoteRedisRepository noteRedisRepository,
+//            NoteRedisRepository noteRedisRepository,
             NoteRepositoryImpl noteRepository,
             NotificationService notificationService) {
         //this.noteRedisRepository = noteRedisRepository;

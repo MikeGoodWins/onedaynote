@@ -2,7 +2,7 @@ buildscript {
     ext {
         dockerPluginVersion = '1.2'
         flywayPluginVersion = '5.1.4'
-        springBootVersion = '2.1.6.RELEASE'
+        springBootVersion = '2.4.2'
     }
     repositories {
         mavenCentral()
@@ -58,19 +58,29 @@ ext {
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '2.4.2'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.4.2'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.4.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation "org.springframework.boot:spring-boot-starter-mail"
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
     implementation "org.flywaydb:flyway-core"
-    runtimeOnly "org.postgresql:postgresql"
-    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+//    implementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.4"
+//    implementation "com.fasterxml.jackson.core:jackson-databind:2.9.4"
+//    implementation "com.fasterxml.jackson.core:jackson-annotations:2.9.4"
     implementation group: "com.sun.jersey", name: "jersey-bundle", version: "1.11"
     implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
