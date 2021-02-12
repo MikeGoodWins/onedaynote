@@ -13,20 +13,6 @@ public final class ParamUtils {
     private ParamUtils() {
     }
 
-    public static void checkNoteModel(NoteCreate model){
-        switch (model.getType()){
-        case PICTURE:
-            if(StringUtils.isNullOrEmpty(model.getText()))
-                throw new BadRequestException("Picture can not be empty");
-            break;
-        case TEXT:
-        default:
-            if(StringUtils.isNullOrEmpty(model.getText()))
-                throw new BadRequestException("Text can not be empty");
-            break;
-        }
-    }
-
     public static String paramString(NoteCreate model){
         return paramString(model.getDefinition().getDefinition(),
                 model.getColor().getColor(),

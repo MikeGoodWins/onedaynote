@@ -1,8 +1,9 @@
 package online.onedaynote.api.dto.note;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
+import lombok.Setter;
 import online.onedaynote.api.dto.enums.Action;
 import online.onedaynote.api.dto.enums.Animal;
 import online.onedaynote.api.dto.enums.Color;
@@ -10,29 +11,29 @@ import online.onedaynote.api.dto.enums.Definition;
 import online.onedaynote.api.dto.enums.NoteType;
 
 @Getter
+@Setter
 public class NoteCreate {
 
-    @NonNull
+    @NotNull
     private NoteType type;
 
     @NotBlank
     private String key;
 
-    private String text;
+    @NotBlank
+    private String payload;
 
-    private String picture;
+    private Definition definition = Definition.UNDEFINED;
 
-    private Definition definition;
+    private Color color = Color.UNDEFINED;
 
-    private Color color;
+    private Animal animal = Animal.UNDEFINED;
 
-    private Animal animal;
+    private Action action = Action.UNDEFINED;
 
-    private Action action;
+    private boolean removable = false;
 
-    private boolean removable;
-
-    private boolean needNotify;
+    private boolean needNotify = false;
 
     private String notifyEmail;
 }

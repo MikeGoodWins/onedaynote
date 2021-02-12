@@ -1,10 +1,7 @@
 package online.onedaynote.api.dao.entity;
 
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,17 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import online.onedaynote.api.dto.enums.NoteType;
-import online.onedaynote.api.dto.note.NoteCreate;
-import online.onedaynote.api.dto.note.NoteDto;
-import online.onedaynote.api.utils.TimeUtils;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "notes")
-public class Note implements Serializable {
+@NoArgsConstructor
+@Table(name = "notes_history")
+public class NoteHistory implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,22 +49,14 @@ public class Note implements Serializable {
     @Column(name = "created")
     public LocalDateTime created;
 
-    public Note(String encodeKey, String encodePayload, NoteCreate model) {
-        this.key = encodeKey;
-        this.payload = encodePayload;
-        this.noteType = model.getType();
-        this.removable = model.isRemovable();
-        this.needNotify = model.isNeedNotify();
-        this.notifyEmail = ((model.isNeedNotify()) ? model.getNotifyEmail() : "");
-        this.simpleDate = DateTimeFormatter.ofPattern("dd-MM-yyyy").format(TimeUtils.now());
-        this.created = TimeUtils.now();
-    }
-
-    public Note() {
-
-    }
-
-    public NoteDto toDto(){
-        return new NoteDto(this.id, this.created);
+    public NoteHistory(Note note) {
+        this.key = note.getKey();
+        this.payload = note.getPayload();
+        this.noteType = note.getNoteType();
+        this.removable = note.isRemovable();
+        this.needNotify = note.isNeedNotify();
+        this.notifyEmail = note.getNotifyEmail();
+        this.simpleDate = note.getSimpleDate();
+        this.created = note.getCreated();
     }
 }

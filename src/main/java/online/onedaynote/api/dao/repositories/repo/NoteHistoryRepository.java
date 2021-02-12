@@ -1,14 +1,12 @@
 package online.onedaynote.api.dao.repositories.repo;
 
 import java.util.Optional;
-import online.onedaynote.api.dao.entity.Note;
+import online.onedaynote.api.dao.entity.NoteHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NoteRepositoryImpl extends JpaRepository<Note, Long> {
+public interface NoteHistoryRepository extends JpaRepository<NoteHistory, Long> {
 
-    Optional<Note> findByKey(String key);
-
-
+    Optional<NoteHistory> findByKey(String key);
 }

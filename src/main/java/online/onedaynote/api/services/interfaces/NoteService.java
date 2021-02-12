@@ -10,4 +10,6 @@ public interface NoteService {
     NoteDto get(String key);
 
     NoteDto add(NoteCreate model);
+
+    void delete();
 }
