@@ -2,7 +2,6 @@ package online.onedaynote.api.dto.note;
 
 import java.time.LocalDateTime;
 import online.onedaynote.api.dao.entity.Note;
-import online.onedaynote.api.dto.enums.NoteType;
 
 public class NoteDto {
 
@@ -10,7 +9,7 @@ public class NoteDto {
 
     public String key;
 
-    public NoteType type;
+    public int type;
 
     public String payload;
 
@@ -19,13 +18,13 @@ public class NoteDto {
     public NoteDto(long id, String key, int type, LocalDateTime created) {
         this.id = id;
         this.key = key;
-        this.type = NoteType.getType(type);
+        this.type = type;
         this.created = created;
     }
 
     public NoteDto(Note note, String decryptedPayload) {
         this.id = note.getId();
-        this.type = NoteType.getType(note.getNoteType());
+        this.type = note.getNoteType();
         this.payload = decryptedPayload;
         this.created = note.created;
     }

@@ -1,10 +1,8 @@
 package online.onedaynote.api.dao.entity;
 
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import online.onedaynote.api.dto.enums.NoteType;
 import online.onedaynote.api.dto.note.NoteCreate;
-import online.onedaynote.api.dto.note.NoteDto;
 import online.onedaynote.api.utils.TimeUtils;
 
 @Getter
@@ -56,7 +52,7 @@ public class Note implements Serializable {
     public Note(String encodeKey, String encodePayload, NoteCreate model) {
         this.key = encodeKey;
         this.payload = encodePayload;
-        this.noteType = model.getType();
+        this.noteType = model.getType().getType();
         this.removable = model.isRemovable();
         this.needNotify = model.isNeedNotify();
         this.notifyEmail = ((model.isNeedNotify()) ? model.getNotifyEmail() : "");

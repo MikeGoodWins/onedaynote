@@ -3,7 +3,6 @@ package online.onedaynote.api.rest;
 import static online.onedaynote.api.rest.Paths.NOTES;
 import static online.onedaynote.api.rest.Paths.ROOT;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;

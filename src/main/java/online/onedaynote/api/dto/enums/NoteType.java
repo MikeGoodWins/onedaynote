@@ -13,11 +13,11 @@ public enum NoteType {
         this.type = type;
     }
 
-    public static boolean contains(int type){
-        return Arrays.stream(NoteType.values()).anyMatch(nt -> type == nt.getType());
+    public static boolean contains(NoteType type){
+        return Arrays.asList(NoteType.values()).contains(type);
     }
 
-    public static boolean notContains(int type){
+    public static boolean notContains(NoteType type){
         return !contains(type);
     }
 

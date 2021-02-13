@@ -78,7 +78,7 @@ public class NoteServiceImpl implements NoteService {
             log.info("*** Note with key found. Editing note payload");
             note = existsNote.get();
             note.setPayload(cryptService.encrypt(model.getPayload()));
-            note.setNoteType(model.getType());
+            note.setNoteType(model.getType().getType());
             note.setNeedNotify(model.isNeedNotify());
             note.setNotifyEmail(model.getNotifyEmail());
             note.setRemovable(model.isRemovable());
