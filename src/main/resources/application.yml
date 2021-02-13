@@ -7,7 +7,7 @@ spring:
 #    web-application-type: none
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST_NAME:postgres}:${POSTGRES_PORT:5432}/notes
-    username: ${POSTGRES_USER:root}
+    username: ${POSTGRES_USERNAME:root}
     password: ${POSTGRES_PASSWORD:root}
     driver-class-name: org.postgresql.Driver
   mail:

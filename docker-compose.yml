@@ -4,7 +4,7 @@ services:
   #Postgres-----------------------------------------------#
 
   postgres:
-    image: postgres:10.1
+    image: postgres:latest
     container_name: ${POSTGRES_HOST_NAME}
     volumes:
       - /home/goodwin/onedaynotedb/data/db/postgres:/var/lib/postgresql/data
@@ -26,6 +26,8 @@ services:
       - ${NOTES_PORT}:4444
     depends_on:
       - postgres
+    env_file: 
+    - .env
     networks:
       - notes
 networks:
