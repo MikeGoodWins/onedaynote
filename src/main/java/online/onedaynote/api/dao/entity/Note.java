@@ -67,8 +67,4 @@ public class Note implements Serializable {
     public Note() {
 
     }
-
-    public NoteDto toDto(){
-        return new NoteDto(this.id, this.created);
-    }
 }

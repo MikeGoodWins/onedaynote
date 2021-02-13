@@ -8,14 +8,18 @@ public class NoteDto {
 
     public long id;
 
+    public String key;
+
     public NoteType type;
 
     public String payload;
 
     public LocalDateTime created;
 
-    public NoteDto(long id, LocalDateTime created) {
+    public NoteDto(long id, String key, int type, LocalDateTime created) {
         this.id = id;
+        this.key = key;
+        this.type = NoteType.getType(type);
         this.created = created;
     }
 

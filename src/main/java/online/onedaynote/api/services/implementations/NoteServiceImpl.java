@@ -87,7 +87,7 @@ public class NoteServiceImpl implements NoteService {
         noteRepository.save(note);
         noteHistoryRepository.save(new NoteHistory(note));
         log.info("*** Note successfully saved");
-        result = new NoteDto(note.getId(), note.getCreated());
+        result = new NoteDto(note.getId(), model.getKey(), note.getNoteType(), note.getCreated());
         return result;
     }
 

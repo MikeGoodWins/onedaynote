@@ -1,7 +1,6 @@
 package online.onedaynote.api.dto.note;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import online.onedaynote.api.dto.enums.Action;
@@ -16,10 +15,8 @@ public class NoteCreate {
 
     private int type = NoteType.TEXT.getType();
 
-    @NotBlank
     private String key;
 
-    @NotBlank
     private String payload;
 
     private Definition definition = Definition.UNDEFINED;

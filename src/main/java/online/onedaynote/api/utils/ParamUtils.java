@@ -1,5 +1,8 @@
 package online.onedaynote.api.utils;
 
+import static org.apache.commons.lang3.StringUtils.trim;
+
+
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import online.onedaynote.api.dto.enums.Action;
@@ -45,14 +48,14 @@ public final class ParamUtils {
 
     public static void checkKey(NoteCreate model){
         log.info("/// Check key");
-        if(StringUtils.isNullOrEmpty(model.getKey())){
+        if(StringUtils.isNullOrEmpty(trim(model.getKey()))){
             throw new BadRequestException("Key parameter is invalid");
         }
     }
 
     public static void checkKey(String key){
         log.info("/// Check key");
-        if(StringUtils.isNullOrEmpty(key)){
+        if(StringUtils.isNullOrEmpty(trim(key))){
             throw new BadRequestException("Key parameter is invalid");
         }
     }

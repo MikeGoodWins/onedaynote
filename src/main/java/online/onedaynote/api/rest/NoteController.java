@@ -67,7 +67,7 @@ public class NoteController {
     @PostMapping(ROOT)
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NoteDto> addNote(@Valid NoteCreate model){
+    public ResponseEntity<NoteDto> addNote(@RequestBody NoteCreate model){
 
         log.info("/// Add note");
         ParamUtils.checkType(model);
