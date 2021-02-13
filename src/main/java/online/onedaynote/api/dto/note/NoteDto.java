@@ -21,7 +21,7 @@ public class NoteDto {
 
     public NoteDto(Note note, String decryptedPayload) {
         this.id = note.getId();
-        this.type = note.getNoteType();
+        this.type = NoteType.getType(note.getNoteType());
         this.payload = decryptedPayload;
         this.created = note.created;
     }

@@ -26,6 +26,7 @@ public class AppConfig {
                     final WebRequest webRequest, final ErrorAttributeOptions options) {
                 Map<String, Object> errorAttr = super.getErrorAttributes(webRequest, options);
                 Throwable error = getError(webRequest);
+                errorAttr.put("message", error.getMessage());
                 if(error instanceof NoteException){
                     errorAttr.put("code", ((NoteException) error).getCode());
                     errorAttr.remove("trace");

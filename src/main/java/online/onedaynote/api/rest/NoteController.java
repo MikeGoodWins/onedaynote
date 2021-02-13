@@ -48,6 +48,7 @@ public class NoteController {
             final @RequestParam(value = "action", defaultValue = "0") int action){
 
         log.info("/// Get note");
+        ParamUtils.checkKey(key);
         NoteDto result = noteService.get(key.concat(
                 ParamUtils.paramString(key, definition, color, animal, action)));
         return ResponseEntity.ok(result);

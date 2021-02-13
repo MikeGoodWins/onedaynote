@@ -36,7 +36,7 @@ public class Note implements Serializable {
     public String payload;
 
     @Column(name = "note_type")
-    public NoteType noteType;
+    public int noteType;
 
     @Column(name = "removable")
     public boolean removable;

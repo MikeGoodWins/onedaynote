@@ -38,8 +38,7 @@ public final class ParamUtils {
 
     public static void checkType(NoteCreate model){
         log.info("/// Check type");
-        if(Objects.isNull(model.getType())
-        || NoteType.notContains(model.getType())){
+        if(NoteType.notContains(model.getType())){
             throw new BadRequestException("Type parameter is invalid");
         }
     }
@@ -47,6 +46,13 @@ public final class ParamUtils {
     public static void checkKey(NoteCreate model){
         log.info("/// Check key");
         if(StringUtils.isNullOrEmpty(model.getKey())){
+            throw new BadRequestException("Key parameter is invalid");
+        }
+    }
+
+    public static void checkKey(String key){
+        log.info("/// Check key");
+        if(StringUtils.isNullOrEmpty(key)){
             throw new BadRequestException("Key parameter is invalid");
         }
     }

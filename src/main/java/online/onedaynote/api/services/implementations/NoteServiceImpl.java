@@ -49,7 +49,10 @@ public class NoteServiceImpl implements NoteService {
         log.info("*** Get note");
         String encryptedKey = cryptService.encrypt(key);
         Optional<Note> noteOptional = noteRepository.findByKey(encryptedKey);
-        if(noteOptional.isEmpty()) throw new NotFoundException("Note not found");
+        if(noteOptional.isEmpty()){
+            log.info("*** Note not found by key");
+            throw new NotFoundException("Note not found");
+        }
         log.info("*** Note found");
         Note note = noteOptional.get();
         noteHandleNotify(note);
