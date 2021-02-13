@@ -47,8 +47,9 @@ public class NoteController {
             final @RequestParam(value = "animal", defaultValue = "0") int animal,
             final @RequestParam(value = "action", defaultValue = "0") int action){
 
+        log.info("/// Get note");
         NoteDto result = noteService.get(key.concat(
-                ParamUtils.paramString(definition, color, animal, action)));
+                ParamUtils.paramString(key, definition, color, animal, action)));
         return ResponseEntity.ok(result);
     }
 
@@ -57,6 +58,7 @@ public class NoteController {
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ParamsDto> getParams(){
 
+        log.info("/// Get params");
         ParamsDto result = noteService.getParams();
         return ResponseEntity.ok(result);
     }
@@ -66,6 +68,7 @@ public class NoteController {
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteDto> addNote(@Valid NoteCreate model){
 
+        log.info("/// Add note");
         ParamUtils.checkType(model);
         ParamUtils.checkKey(model);
         ParamUtils.checkPayload(model);
@@ -79,6 +82,7 @@ public class NoteController {
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     public void delete(){
 
+        log.info("/// Delete old notes");
         noteService.delete();
     }
 

@@ -3,6 +3,7 @@ package online.onedaynote.api.services.implementations;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import online.onedaynote.api.dao.entity.Note;
 import online.onedaynote.api.dao.entity.NoteHistory;
 import online.onedaynote.api.dao.repositories.repo.NoteHistoryRepository;
@@ -23,6 +24,7 @@ import online.onedaynote.api.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class NoteServiceImpl implements NoteService {
 
     private final NoteRepository noteRepository;
@@ -44,27 +46,33 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteDto get(String key){
 
+        log.info("*** Get note");
         String encryptedKey = cryptService.encrypt(key);
-        Optional<Note> note = noteRepository.findByKey(encryptedKey);
-        if(note.isEmpty()) throw new NotFoundException("Note not found");
-        noteHandleNotify(note.get());
-        noteHandleRemove(note.get());
-        Note result = note.get();
-        String decryptedPayload = cryptService.decrypt(result.getPayload());
-        return new NoteDto(result, decryptedPayload);
+        Optional<Note> noteOptional = noteRepository.findByKey(encryptedKey);
+        if(noteOptional.isEmpty()) throw new NotFoundException("Note not found");
+        log.info("*** Note found");
+        Note note = noteOptional.get();
+        noteHandleNotify(note);
+        noteHandleRemove(note);
+        String decryptedPayload = cryptService.decrypt(note.getPayload());
+        return new NoteDto(note, decryptedPayload);
     }
 
     @Override
     public NoteDto add(NoteCreate model) {
+
+        log.info("*** Add note");
         NoteDto result;
         String fullKey = model.getKey().concat(ParamUtils.paramString(model));
         String key = cryptService.encrypt(fullKey);
         Optional<Note> existsNote = noteRepository.findByKey(key);
         Note note;
         if(existsNote.isEmpty()){
+            log.info("*** Note with key not found. Adding new note");
             String payloadString = cryptService.encrypt(model.getPayload());
             note = new Note(key, payloadString, model);
         } else {
+            log.info("*** Note with key found. Editing note payload");
             note = existsNote.get();
             note.setPayload(cryptService.encrypt(model.getPayload()));
             note.setNoteType(model.getType());
@@ -75,6 +83,7 @@ public class NoteServiceImpl implements NoteService {
         }
         noteRepository.save(note);
         noteHistoryRepository.save(new NoteHistory(note));
+        log.info("*** Note successfully saved");
         result = new NoteDto(note.getId(), note.getCreated());
         return result;
     }
@@ -82,16 +91,21 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void delete() {
 
+        log.info("*** Delete old notes");
         String today = DateTimeFormatter.ofPattern("dd-MM-yyyy").format(TimeUtils.now());
         List<Note> yesterdayNotes = noteRepository.findAllBySimpleDateBefore(today);
         if(!yesterdayNotes.isEmpty()){
+            log.info("*** Old note list is not empty");
             noteRepository.deleteAll(yesterdayNotes);
+            log.info("*** Old notes delete successfully");
         }
+        log.info("*** Old note list is empty");
     }
 
     @Override
     public ParamsDto getParams() {
 
+        log.info("*** Get request params list");
         String[] definitionsArray = Definition.getValues();
         String[] colorsArray = Color.getValues();
         String[] animalsArray = Animal.getValues();
@@ -100,13 +114,17 @@ public class NoteServiceImpl implements NoteService {
     }
 
     private void noteHandleRemove(Note note){
+        log.info("*** Handle remove note");
         if(note.removable){
+            log.info("*** Removable note was deleted");
             noteRepository.delete(note);
         }
     }
 
     private void noteHandleNotify(Note note){
+        log.info("*** Handle notify note");
         if(note.needNotify){
+            log.info("*** Need notify");
              notificationService.send(note);
         }
     }

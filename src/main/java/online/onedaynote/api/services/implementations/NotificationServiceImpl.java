@@ -38,6 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
      */
     public void send(Note note) {
 
+        log.info("Try send notify to email");
         if (Objects.isNull(note.notifyEmail)) return;
         try {
 

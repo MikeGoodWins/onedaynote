@@ -5,25 +5,25 @@ services:
 
   postgres:
     image: postgres:10.1
-    container_name: postgres
+    container_name: ${POSTGRES_HOST_NAME}
     volumes:
       - /home/goodwin/onedaynotedb/data/db/postgres:/var/lib/postgresql/data
       - ../tools/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
     networks:
       - notes
 
   #Notes-----------------------------------------------#
 
   notes:
-    container_name: notes
-    image: mikegoodwin/notes:1.0
+    container_name: ${NOTES_CONTAINER_NAME}
+    image: ${HUB}${NOTES_IMAGE_NAME}:${NOTES_VERSION}
     ports:
-      - 4444:4444
+      - ${NOTES_PORT}:4444
     depends_on:
       - postgres
     networks:

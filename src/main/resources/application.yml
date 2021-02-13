@@ -1,26 +1,20 @@
 server:
-  port: 4444
+  port: ${NOTES_PORT:4444}
 spring:
   application:
     name: notes
 #  main:
 #    web-application-type: none
   datasource:
-    url: jdbc:postgresql://postgres:5432/notes
-    username: root
-    password: root
+    url: jdbc:postgresql://${POSTGRES_HOST_NAME:postgres}:${POSTGRES_PORT:5432}/notes
+    username: ${POSTGRES_USER:root}
+    password: ${POSTGRES_PASSWORD:root}
     driver-class-name: org.postgresql.Driver
-#  redis:
-#    host: ${REDIS_HOST:redis}
-#    port: ${REDIS_PORT:6379}
-#    username: ${REDIS_USERNAME:redis}
-#    password: ${REDIS_PASSWORD:password}
-#    hashKey: 'NOTES'
   mail:
     host: smtp.yandex.ru
     port: 587
-    username: ${MAIL_USERNAME:notify@onedaynote.online}
-    password: ${MAIL_PASSWORD:generatedpass}
+    username: ${NOTES_MAIL_USERNAME:notify@onedaynote.online}
+    password: ${NOTES_MAIL_PASSWORD:generatedpass}
     properties.mail.smtp:
       ssl.enable: true
       timeout: 5

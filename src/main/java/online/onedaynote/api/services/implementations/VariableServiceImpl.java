@@ -9,6 +9,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 import javax.crypto.spec.IvParameterSpec;
+import lombok.extern.slf4j.Slf4j;
 import online.onedaynote.api.config.SecureConstants;
 import online.onedaynote.api.dao.entity.Variable;
 import online.onedaynote.api.dao.entity.VariableHistory;
@@ -20,6 +21,7 @@ import online.onedaynote.api.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class VariableServiceImpl implements VariableService {
 
     private final VariableRepository variableRepository;
@@ -50,12 +52,15 @@ public class VariableServiceImpl implements VariableService {
 
     private byte[] getOrGenerate(String key){
 
+        log.info("*** Get new security param " + key);
         byte[] result;
         String today = DateTimeFormatter.ofPattern("dd-MM-yyyy").format(TimeUtils.now());
         Variable vars = variableRepository.findByKeyAndSimpleDate(key, today);
         if(Objects.nonNull(vars)){
+            log.info("*** Security param " + key + " was found in database");
             result = Base64.getDecoder().decode(vars.getValue());
         }else{
+            log.info("*** Security param " + key + " wasn't found in database. Generate new value");
             result = generateAndSaveParam(key);
         }
         return result;

@@ -30,6 +30,7 @@ public class VarsController {
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     public void delete(){
 
+        log.info("*** Delete old security params");
         variableService.deleteAnotherDaysParams();
     }
 }
