@@ -99,7 +99,7 @@ public class NoteServiceImpl implements NoteService {
         List<Note> yesterdayNotes = noteRepository.findAllBySimpleDateBefore(today);
         if(!yesterdayNotes.isEmpty()){
             log.info("*** Old note list is not empty");
-            noteRepository.deleteAll(yesterdayNotes);
+            yesterdayNotes.forEach(noteRepository::delete);
             log.info("*** Old notes delete successfully");
         }
         log.info("*** Old note list is empty");

@@ -1,5 +1,6 @@
 package online.onedaynote.api.rest;
 
+import static online.onedaynote.api.rest.Paths.DELETE_OLD;
 import static online.onedaynote.api.rest.Paths.NOTES;
 import static online.onedaynote.api.rest.Paths.ROOT;
 
@@ -77,7 +78,7 @@ public class NoteController {
     }
 
     @Scheduled(cron = "0 2 0 * * *")
-    @DeleteMapping(ROOT)
+    @DeleteMapping(DELETE_OLD)
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     public void delete(){
