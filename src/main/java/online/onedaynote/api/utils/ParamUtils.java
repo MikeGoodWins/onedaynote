@@ -1,5 +1,6 @@
 package online.onedaynote.api.utils;
 
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import online.onedaynote.api.dto.enums.Action;
 import online.onedaynote.api.dto.enums.Animal;
@@ -37,7 +38,8 @@ public final class ParamUtils {
 
     public static void checkType(NoteCreate model){
         log.info("/// Check type");
-        if(NoteType.notContains(model.getType())){
+        if(Objects.isNull(model.getType())
+        || NoteType.notContains(model.getType())){
             throw new BadRequestException("Type parameter is invalid");
         }
     }

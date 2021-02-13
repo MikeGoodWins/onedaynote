@@ -1,7 +1,9 @@
 package online.onedaynote.api.dto.enums;
 
 import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public enum Action {
 
     UNDEFINED(0, "Undefined"),
@@ -32,6 +34,7 @@ public enum Action {
     }
 
     public static String[] getValues(){
+        log.info("Get action values array");
         return Arrays.stream(Action.values())
                 .map(Action::getName)
                 .toArray(String[]::new);

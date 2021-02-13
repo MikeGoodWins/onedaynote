@@ -1,7 +1,9 @@
 package online.onedaynote.api.dto.enums;
 
 import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public enum Definition {
 
     UNDEFINED(0, "Undefined"),
@@ -33,6 +35,7 @@ public enum Definition {
     }
 
     public static String[] getValues(){
+        log.info("Get definition values array");
         return Arrays.stream(Definition.values())
                 .map(Definition::getName)
                 .toArray(String[]::new);

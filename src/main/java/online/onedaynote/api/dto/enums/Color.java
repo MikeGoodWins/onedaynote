@@ -1,7 +1,9 @@
 package online.onedaynote.api.dto.enums;
 
 import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public enum Color {
 
     UNDEFINED(0, "Undefined"),
@@ -32,6 +34,7 @@ public enum Color {
     }
 
     public static String[] getValues(){
+        log.info("Get color values array");
         return Arrays.stream(Color.values())
                 .map(Color::getName)
                 .toArray(String[]::new);
