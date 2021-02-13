@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.Optional;
 import online.onedaynote.api.dao.entity.Note;
 import online.onedaynote.api.dao.entity.NoteHistory;
-import online.onedaynote.api.dao.entity.Variable;
 import online.onedaynote.api.dao.repositories.repo.NoteHistoryRepository;
 import online.onedaynote.api.dao.repositories.repo.NoteRepository;
+import online.onedaynote.api.dto.enums.Action;
+import online.onedaynote.api.dto.enums.Animal;
+import online.onedaynote.api.dto.enums.Color;
+import online.onedaynote.api.dto.enums.Definition;
 import online.onedaynote.api.dto.note.NoteCreate;
 import online.onedaynote.api.dto.note.NoteDto;
+import online.onedaynote.api.dto.note.ParamsDto;
 import online.onedaynote.api.exceptions.NotFoundException;
 import online.onedaynote.api.services.interfaces.CryptService;
 import online.onedaynote.api.services.interfaces.NoteService;
@@ -83,6 +87,16 @@ public class NoteServiceImpl implements NoteService {
         if(!yesterdayNotes.isEmpty()){
             noteRepository.deleteAll(yesterdayNotes);
         }
+    }
+
+    @Override
+    public ParamsDto getParams() {
+
+        String[] definitionsArray = Definition.getValues();
+        String[] colorsArray = Color.getValues();
+        String[] animalsArray = Animal.getValues();
+        String[] actionsArray = Action.getValues();
+        return new ParamsDto(definitionsArray, colorsArray, animalsArray, actionsArray);
     }
 
     private void noteHandleRemove(Note note){

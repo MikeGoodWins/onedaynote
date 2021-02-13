@@ -4,17 +4,20 @@ import java.util.Arrays;
 
 public enum Definition {
 
-    UNDEFINED(0),
-    HAPPY(1),
-    UGLY(1),
-    DEAD(3),
-    ZOMBIE(4),
-    SHINY(5);
+    UNDEFINED(0, "Undefined"),
+    HAPPY(1, "Happy"),
+    UGLY(2, "Ugly"),
+    DEAD(3, "Dead"),
+    ZOMBIE(4, "Zombie"),
+    SHINY(5, "Shiny");
 
-    private int definition;
+    private final int definition;
+    private final String definitionName;
 
-    Definition(int definition){
+    Definition(int definition, String definitionName){
+
         this.definition = definition;
+        this.definitionName = definitionName;
     }
     public int getDefinition() {
         return this.definition;
@@ -23,5 +26,15 @@ public enum Definition {
         return Arrays.stream(Definition.values())
                 .filter(c -> definition == c.getDefinition())
                 .findFirst().orElse(UNDEFINED);
+    }
+
+    public String getName(){
+        return this.definitionName;
+    }
+
+    public static String[] getValues(){
+        return Arrays.stream(Definition.values())
+                .map(Definition::getName)
+                .toArray(String[]::new);
     }
 }

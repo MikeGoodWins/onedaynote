@@ -4,17 +4,19 @@ import java.util.Arrays;
 
 public enum Color {
 
-    UNDEFINED(0),
-    RED(1),
-    GREEN(1),
-    BLUE(3),
-    BLACK(4),
-    WHITE(5);
+    UNDEFINED(0, "Undefined"),
+    RED(1, "Red"),
+    GREEN(1, "Green"),
+    BLUE(3, "Blue"),
+    BLACK(4, "Black"),
+    WHITE(5, "White");
 
-    private int color;
+    private final int color;
+    private final String colorName;
 
-    Color(int color){
+    Color(int color, String colorName){
         this.color = color;
+        this.colorName = colorName;
     }
     public int getColor() {
         return this.color;
@@ -23,5 +25,15 @@ public enum Color {
         return Arrays.stream(Color.values())
                 .filter(c -> color == c.getColor())
                 .findFirst().orElse(UNDEFINED);
+    }
+
+    public String getName(){
+        return this.colorName;
+    }
+
+    public static String[] getValues(){
+        return Arrays.stream(Color.values())
+                .map(Color::getName)
+                .toArray(String[]::new);
     }
 }
