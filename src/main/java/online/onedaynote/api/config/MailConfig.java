@@ -41,6 +41,7 @@ public class MailConfig {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", ssl);
         props.put("mail.smtp.ssl.trust", host);
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
         return mailSender;
     }

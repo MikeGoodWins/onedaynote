@@ -40,6 +40,9 @@ public class NoteHistory implements Serializable {
     @Column(name = "need_notify")
     public boolean needNotify;
 
+    @Column(name = "notified")
+    public boolean notified;
+
     @Column(name = "notify_email")
     public String notifyEmail;
 

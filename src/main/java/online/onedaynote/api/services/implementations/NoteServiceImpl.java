@@ -126,9 +126,15 @@ public class NoteServiceImpl implements NoteService {
 
     private void noteHandleNotify(Note note){
         log.info("*** Handle notify note");
-        if(note.needNotify){
+        if(note.needNotify && !note.isNotified()){
             log.info("*** Need notify");
              notificationService.send(note);
+             notified(note);
         }
+    }
+
+    private void notified(Note note){
+        note.setNotified(true);
+        noteRepository.saveAndFlush(note);
     }
 }

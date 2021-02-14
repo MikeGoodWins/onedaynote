@@ -10,7 +10,7 @@ public final class TimeUtils {
     }
 
     public static LocalDateTime now() {
-        return LocalDateTime.now(TimeUtils.utcZone());
+        return LocalDateTime.now(TimeUtils.utcZone()).plusHours(3L);
     }
 
     public static ZoneId utcZone() {

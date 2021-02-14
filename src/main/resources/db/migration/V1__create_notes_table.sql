@@ -6,6 +6,7 @@ create table if not exists notes
     note_type                integer,
     removable                bool,
     need_notify              bool,
+    notified                 bool,
     notify_email             varchar,
     simple_date              varchar,
     created                  varchar
@@ -18,6 +19,7 @@ create table if not exists notes_history
     note_type                integer,
     removable                bool,
     need_notify              bool,
+    notified                 bool,
     notify_email             varchar,
     simple_date              varchar,
     created                  varchar

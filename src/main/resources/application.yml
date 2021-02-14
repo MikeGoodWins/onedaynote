@@ -8,13 +8,13 @@ spring:
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST_NAME:postgres}:${POSTGRES_PORT:5432}/notes
     username: ${POSTGRES_USERNAME:root}
-    password: ${POSTGRES_PASSWORD:root}
+    password: ${POSTGRES_PASSWORD:uTRN26q8cKcwq}
     driver-class-name: org.postgresql.Driver
   mail:
     host: smtp.yandex.ru
     port: 587
     username: ${NOTES_MAIL_USERNAME:notify@onedaynote.online}
-    password: ${NOTES_MAIL_PASSWORD:generatedpass}
+    password: ${NOTES_MAIL_PASSWORD:notify2232))!}
     properties.mail.smtp:
       ssl.enable: true
       timeout: 5
