@@ -2,6 +2,7 @@ package online.onedaynote.api.services.implementations;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import online.onedaynote.api.dao.entity.Note;
@@ -20,6 +21,7 @@ import online.onedaynote.api.services.interfaces.CryptService;
 import online.onedaynote.api.services.interfaces.NoteService;
 import online.onedaynote.api.services.interfaces.NotificationService;
 import online.onedaynote.api.utils.ParamUtils;
+import online.onedaynote.api.utils.StringUtils;
 import online.onedaynote.api.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
@@ -54,11 +56,18 @@ public class NoteServiceImpl implements NoteService {
             throw new NotFoundException("Note not found");
         }
         log.info("*** Note found");
+        NoteDto result;
         Note note = noteOptional.get();
         noteHandleNotify(note);
         noteHandleRemove(note);
         String decryptedPayload = cryptService.decrypt(note.getPayload());
-        return new NoteDto(note, decryptedPayload);
+        if(StringUtils.isNullOrEmpty(note.getExtraPayload())){
+            result = new NoteDto(note, decryptedPayload);
+        } else {
+            String decryptedExtraPayload = cryptService.decrypt(note.getExtraPayload());
+            result = new NoteDto(note, decryptedPayload, decryptedExtraPayload);
+        }
+        return result;
     }
 
     @Override
@@ -72,8 +81,12 @@ public class NoteServiceImpl implements NoteService {
         Note note;
         if(existsNote.isEmpty()){
             log.info("*** Note with key not found. Adding new note");
+            String extraPayloadString = "";
+            if(Objects.nonNull(model.getExtraPayload())){
+                extraPayloadString = cryptService.encrypt(model.getExtraPayload());
+            }
             String payloadString = cryptService.encrypt(model.getPayload());
-            note = new Note(key, payloadString, model);
+            note = new Note(key, payloadString, extraPayloadString, model);
         } else {
             log.info("*** Note with key found. Editing note payload");
             note = existsNote.get();
@@ -125,6 +138,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     private void noteHandleNotify(Note note){
+        //todo добавлять в таблицу с указанием id note, джоббером проходить каждые 5 минут и отправлять через notificationService
         log.info("*** Handle notify note");
         if(note.needNotify && !note.isNotified()){
             log.info("*** Need notify");

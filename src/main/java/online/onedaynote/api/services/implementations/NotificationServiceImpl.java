@@ -26,7 +26,7 @@ public class NotificationServiceImpl implements NotificationService {
     private String from;
 
     private static final String MAIL_SUBJECT = "OneDayNote delivery report";
-    private static final String MAIL_BODY = "Note was opened at ";
+    private static final String MAIL_BODY = "Note written %s was opened at ";
     private final JavaMailSender emailSender;
 
     public NotificationServiceImpl(JavaMailSender emailSender) {
@@ -41,7 +41,6 @@ public class NotificationServiceImpl implements NotificationService {
         log.info("Try send notify to email");
         if (Objects.isNull(note.notifyEmail)) return;
         try {
-
             MimeMessage message = emailSender.createMimeMessage();
 
             message.setSubject(MAIL_SUBJECT);
@@ -50,16 +49,27 @@ public class NotificationServiceImpl implements NotificationService {
             message.setFrom(from);
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(note.notifyEmail));
             message.setSubject(MAIL_SUBJECT, "utf-8");
-            message.setContent(MAIL_BODY.concat(TimeUtils.now().format(
-                    DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))),
-                    "text/html; charset=UTF-8");
+            message.setContent(fillMailBody(note),"text/html; charset=UTF-8");
 
             emailSender.send(message);
             log.info("Message was send");
         } catch (MessagingException ex) {
-
             log.error("Message wasn't send: " + ex.getMessage());
             //todo продумать повторную попытку отправки или добавление в еще одну таблицу для  джоббера
         }
+    }
+
+    private String fillMailBody(Note note){
+        String formatCreateDate = note.getCreated().format(
+                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        String formatReadDate = TimeUtils.now().format(
+                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        String createTimeFormat = String.format(MAIL_BODY, formatCreateDate);
+
+        return createTimeFormat
+                .concat(formatReadDate)
+                .concat("<br> Glad to see you again")
+                .concat("<br> Onedaynote Team")
+                .concat("<br> http://onedaynote.online");
     }
 }

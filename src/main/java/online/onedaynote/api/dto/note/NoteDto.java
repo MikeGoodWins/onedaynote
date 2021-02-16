@@ -13,6 +13,8 @@ public class NoteDto {
 
     public String payload;
 
+    public String extraPayload;
+
     public LocalDateTime created;
 
     public NoteDto(long id, String key, int type, LocalDateTime created) {
@@ -26,6 +28,14 @@ public class NoteDto {
         this.id = note.getId();
         this.type = note.getNoteType();
         this.payload = decryptedPayload;
+        this.created = note.created;
+    }
+
+    public NoteDto(Note note, String decryptedPayload, String decryptedExtraPayload) {
+        this.id = note.getId();
+        this.type = note.getNoteType();
+        this.payload = decryptedPayload;
+        this.extraPayload = decryptedExtraPayload;
         this.created = note.created;
     }
 }

@@ -3,6 +3,7 @@ package online.onedaynote.api.dao.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,9 @@ public class Note implements Serializable {
     @Column(name = "payload")
     public String payload;
 
+    @Column(name = "extra_payload")
+    public String extraPayload;
+
     @Column(name = "note_type")
     public int noteType;
 
@@ -52,9 +56,10 @@ public class Note implements Serializable {
     @Column(name = "created")
     public LocalDateTime created;
 
-    public Note(String encodeKey, String encodePayload, NoteCreate model) {
+    public Note(String encodeKey, String encodePayload, String encodeExtraPayload, NoteCreate model) {
         this.key = encodeKey;
         this.payload = encodePayload;
+        this.extraPayload = encodeExtraPayload;
         this.noteType = model.getType().getType();
         this.removable = model.isRemovable();
         this.needNotify = model.isNeedNotify();

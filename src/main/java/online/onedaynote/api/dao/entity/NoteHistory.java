@@ -31,6 +31,9 @@ public class NoteHistory implements Serializable {
     @Column(name = "payload")
     public String payload;
 
+    @Column(name = "extra_payload")
+    public String extraPayload;
+
     @Column(name = "note_type")
     public int noteType;
 

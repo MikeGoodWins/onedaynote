@@ -2,6 +2,7 @@ package online.onedaynote.api.rest;
 
 import static online.onedaynote.api.rest.Paths.DELETE_OLD;
 import static online.onedaynote.api.rest.Paths.NOTES;
+import static online.onedaynote.api.rest.Paths.PARAMS;
 import static online.onedaynote.api.rest.Paths.ROOT;
 
 import javax.validation.constraints.NotBlank;
@@ -54,16 +55,6 @@ public class NoteController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(Paths.PARAMS)
-    @Consumes(MediaType.APPLICATION_JSON_VALUE)
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ParamsDto> getParams(){
-
-        log.info("/// Get params");
-        ParamsDto result = noteService.getParams();
-        return ResponseEntity.ok(result);
-    }
-
     @PostMapping(ROOT)
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
@@ -74,6 +65,16 @@ public class NoteController {
         ParamUtils.checkKey(model);
         ParamUtils.checkPayload(model);
         NoteDto result = noteService.add(model);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(PARAMS)
+    @Consumes(MediaType.APPLICATION_JSON_VALUE)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ParamsDto> getParams(){
+
+        log.info("/// Get params");
+        ParamsDto result = noteService.getParams();
         return ResponseEntity.ok(result);
     }
 

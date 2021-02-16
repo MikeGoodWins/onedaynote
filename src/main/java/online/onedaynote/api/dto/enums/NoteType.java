@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum NoteType {
 
     TEXT(0),
-    PICTURE(1);
+    PICTURE(1),
+    PICTURE_WITH_TEXT(2);
 
     private final int type;
 

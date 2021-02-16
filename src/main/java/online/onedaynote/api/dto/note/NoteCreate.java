@@ -18,6 +18,8 @@ public class NoteCreate {
 
     private String payload;
 
+    private String extraPayload;
+
     private Definition definition = Definition.UNDEFINED;
 
     private Color color = Color.UNDEFINED;
