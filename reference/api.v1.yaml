@@ -223,6 +223,13 @@ components:
           type: string
         code:
           type: integer
+      required:
+        - timestamp
+        - status
+        - error
+        - message
+        - path
+        - code
   responses:
     '400':
       description: Example response
