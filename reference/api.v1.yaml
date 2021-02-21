@@ -92,6 +92,18 @@ components:
     NoteCreate:
       title: NoteCreate
       type: object
+      x-examples:
+        example-1:
+          type: '0:TEXT'
+          key: string
+          payload: string
+          extraPayload: string
+          definition: string
+          color: string
+          animal: string
+          action: string
+          removable: true
+          notifyEmail: string
       properties:
         type:
           type: integer
@@ -117,18 +129,10 @@ components:
           type: boolean
         notifyEmail:
           type: string
-      x-examples:
-        example-1:
-          type: '0:TEXT'
-          key: string
-          payload: string
-          extraPayload: string
-          definition: string
-          color: string
-          animal: string
-          action: string
-          removable: true
-          notifyEmail: string
+      required:
+        - type
+        - key
+        - payload
     NoteDtoFull:
       title: NoteDtoFull
       type: object
@@ -148,6 +152,11 @@ components:
         created:
           type: string
           format: date-time
+      required:
+        - id
+        - type
+        - payload
+        - created
     NoteDtoSimple:
       title: NoteDtoSimple
       type: object
@@ -168,6 +177,10 @@ components:
         created:
           type: string
           format: date-time
+      required:
+        - id
+        - key
+        - created
     ParamsDto:
       title: ParamsDto
       type: object
@@ -188,6 +201,11 @@ components:
           type: array
           items:
             type: string
+      required:
+        - definition
+        - color
+        - animal
+        - action
     Exception:
       title: Exception
       type: object
