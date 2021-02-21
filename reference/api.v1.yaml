@@ -4,7 +4,86 @@ info:
   version: '1.0'
 servers:
   - url: 'http://onedaynote.online'
-paths: {}
+paths:
+  /notes:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteDtoFull'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+      operationId: get-notes
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: key
+        - schema:
+            type: string
+          in: query
+          name: definition
+        - schema:
+            type: string
+          in: query
+          name: color
+        - schema:
+            type: string
+          in: query
+          name: animal
+        - schema:
+            type: string
+          in: query
+          name: action
+    post:
+      summary: ''
+      operationId: post-notes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteDtoSimple'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteCreate'
+        description: ''
+  /params:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParamsDto'
+      operationId: get-params
 components:
   schemas:
     NoteCreate:
@@ -66,3 +145,73 @@ components:
         created:
           type: string
           format: date-time
+    NoteDtoSimple:
+      title: NoteDtoSimple
+      type: object
+      x-examples:
+        example-1:
+          id: string
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        type:
+          type: integer
+          enum:
+            - '0:TEXT'
+            - '1:PICTURE'
+            - '2:PICTURE_WITH_TEXT'
+        created:
+          type: string
+          format: date-time
+    ParamsDto:
+      title: ParamsDto
+      type: object
+      properties:
+        definition:
+          type: array
+          items:
+            type: string
+        color:
+          type: array
+          items:
+            type: string
+        animal:
+          type: array
+          items:
+            type: string
+        action:
+          type: array
+          items:
+            type: string
+    Exception:
+      title: Exception
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        code:
+          type: integer
+  responses:
+    '400':
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Exception'
+    '404':
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Exception'
