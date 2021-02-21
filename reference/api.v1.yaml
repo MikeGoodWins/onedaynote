@@ -50,6 +50,7 @@ paths:
             type: string
           in: query
           name: action
+      description: Get note
     post:
       summary: ''
       operationId: post-notes
@@ -72,6 +73,7 @@ paths:
             schema:
               $ref: '#/components/schemas/NoteCreate'
         description: ''
+      description: Add note
   /params:
     get:
       summary: Your GET endpoint
@@ -84,6 +86,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParamsDto'
       operationId: get-params
+      description: Get params lists
 components:
   schemas:
     NoteCreate:
