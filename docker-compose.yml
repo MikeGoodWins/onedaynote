@@ -1,6 +1,31 @@
 version: "3"
 services:
 
+  #Nginx--------------------------------------------------#
+
+  nginx:
+    image: nginx:latest
+    logging:
+      options:
+        max-size: "10m"
+    container_name: nginx
+    restart: on-failure:2
+    depends_on:
+      - notes
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${NGINX_PROJECT_DATA_PATH}:/var/www
+      - ${NGINX_PROJECT_SSL_CERTIFICATES}:/etc/letsencrypt
+      - ${NGINX_MAIN_PATH}:/etc/nginx
+      - ${NGINX_PROJECT_CONF_PATH}:/etc/nginx/conf.d
+      - ${NGINX_LOG_PATH}:/var/log/nginx
+    env_file:
+      - .env
+    networks:
+      - notes
+
   #Postgres-----------------------------------------------#
 
   postgres:
